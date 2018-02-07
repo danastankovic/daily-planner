@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Listing Tasks</h2>
+<div class="table-responsive">
+<table class="table table-condensed table-bordered">
+  <thead>
+    <tr>
+    <th>Image</th>
+    <th>Date</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Time</th>
+      <th>Completed</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td width="100"><%= image_tag(task.category.image_url, width: 100, alt: task.category.title) if task.category.present? && task.category.image.present? %></td>
+        <td class="date">
+        <div class="day-of-month">
+            <%= task.start_date.strftime("%d") %>
+        </div>
+        <div>
+            <%= task.start_date.strftime("%A") %>        
+        </div>
+        <div class="short-date text-muted">
+            <%= task.start_date.strftime("%B, %Y") %>
+        </div>
+
+            
+            
+        </td>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td><%= task.start_date.strftime("%R") %> <%= task.due_date.present? ? "- #{task.due_date.strftime("%R")}" : '' %></td>
+        <td><%= task.completed %></td>
+        
+        <td><%= link_to 'Show', task, class: 'btn btn-default' %>
+        <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-default' %>
+        <%= link_to 'Destroy', task, class: 'btn btn-danger' ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div> 
+<br>
+
+<%= link_to 'New Task',new_task_path, class: 'btn btn-primary' %>
